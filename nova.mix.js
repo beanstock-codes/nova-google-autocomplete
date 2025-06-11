@@ -14,7 +14,7 @@ class NovaExtension {
     webpackPlugins() {
         return new webpack.ProvidePlugin({
             _: 'lodash',
-            Errors: 'laravel-nova,
+            Errors: 'laravel-nova',
         })
     }
 
