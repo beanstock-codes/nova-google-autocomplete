@@ -73,8 +73,15 @@ export default {
                     if (addressData.hasOwnProperty(element)) {
                         retrievedAddress[element] = addressData[element];
                     }
-                    if (placeResultData.hasOwnProperty(element)) {
+
+                    else if (placeResultData.hasOwnProperty(element)) {
                         retrievedAddress[element] = placeResultData[element];
+                    }
+                    else {
+                        const component = this.findAddressComponent(placeResultData.address_components, element);
+                        if (component) {
+                            retrievedAddress[element] = component.long_name;
+                        }
                     }
                 } else {
                     // Separates the type
@@ -86,6 +93,7 @@ export default {
 
                         if (target.types.includes(value)) {
                             retrievedAddress[value] = target[type];
+                            break;
                         }
                     }
                 }
@@ -95,6 +103,16 @@ export default {
                 attribute: this.field.attribute,
                 ...retrievedAddress,
             });
+        },
+
+        findAddressComponent(addressComponents, targetType) {
+            if (!Array.isArray(addressComponents)) {
+                return null;
+            }
+
+            return addressComponents.find(component =>
+                component.types && component.types.includes(targetType)
+            ) || null;
         },
         setInitialValue() {
             this.value = this.field.value || '';
