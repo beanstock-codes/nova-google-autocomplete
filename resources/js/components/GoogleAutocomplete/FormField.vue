@@ -13,6 +13,7 @@
                 :class="errorClasses"
                 :country="field.countries"
                 :types="field.type"
+                :fields="placeFields"
                 :placeholder="placeholder"
                 v-model="search"
                 v-on:keypress.enter.prevent=""
@@ -42,6 +43,21 @@ export default {
         return {
             search: '',
             value: '',
+            placeFields: [
+                'address_components',
+                'adr_address',
+                'formatted_address',
+                'geometry',
+                'icon',
+                'name',
+                'business_status',
+                'photo',
+                'place_id',
+                'type',
+                'url',
+                'utc_offset_minutes',
+                'vicinity',
+            ],
         };
     },
     computed: {
